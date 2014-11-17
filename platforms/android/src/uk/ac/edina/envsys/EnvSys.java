@@ -63,9 +63,10 @@ public class EnvSys extends CordovaActivity
         File targetTilesZip = new File(mapcacheBaseDirectory, TILES_ZIP);
 
         copyFileFromAssets(WEB_DB, targetWebDb);
-        copyFileFromAssets(TILES_ZIP, targetTilesZip);
-        unzip(targetTilesZip, mapcacheBaseDirectory);
-
+        boolean successfulCopy = copyFileFromAssets(TILES_ZIP, targetTilesZip);
+        if(successfulCopy) {
+            unzip(targetTilesZip, mapcacheBaseDirectory);
+        }
         try{
             File form = new File(Environment.getExternalStorageDirectory(), DEFAULT_FORM);
             if(!form.exists()){
@@ -104,11 +105,17 @@ public class EnvSys extends CordovaActivity
         Log.v(TAG, SOURCE_FORM + " copied to " + DEFAULT_FORM);
     }
 
-    public void copyFileFromAssets(String assetName, File fileTarget) {
+    /**
+     *
+     * @param assetName
+     * @param fileTarget
+     * @return true if successful copy
+     */
+    public boolean copyFileFromAssets(String assetName, File fileTarget) {
 
 
         if(fileTarget.exists()){
-            return;
+            return false;
         }
 
         AssetManager assetManager = getActivity().getAssets();
@@ -133,9 +140,10 @@ public class EnvSys extends CordovaActivity
         } catch (Exception e) {
             Log.e(TAG, "Exception in copyFile() of "+fileTarget);
             Log.e(TAG, "Exception in copyFile() "+e.toString());
+            return false;
         }
         Log.d(TAG, "Finished Copying " + assetName);
-
+        return true;
 
     }
 
@@ -183,4 +191,3 @@ public class EnvSys extends CordovaActivity
 
 
 }
-
