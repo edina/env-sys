@@ -29,7 +29,21 @@
                         "alt": "Capture GPS Track"
                     },
                     "title": "GPS Track"
+                },
+                "item5": {
+                    "div": {"class": "ui-block-e"},
+                    "a": {
+                        "class": "annotate-custom-form",
+                        "data-editor-type": "envsys.edtr",
+                        "href": "#"
+                    },
+                    "img": {
+                        "src": "css/images/custom.png",
+                        "alt": "EnvSys Form"
+                    },
+                    "title": "EnvSys Form"
                 }
+
             }
         },
         "section3": {

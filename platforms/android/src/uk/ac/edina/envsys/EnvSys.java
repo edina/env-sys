@@ -39,13 +39,6 @@ import java.util.zip.ZipInputStream;
 public class EnvSys extends CordovaActivity
 {
     private static final String TAG = "CordovaLog";
-
-
-
-    private static final String DEFAULT_FORM = "/Android/data/uk.ac.edina.envsys/editors/private/envsys.edtr";
-    private static final String SOURCE_FORM = "forms/envsys.edtr";
-
-
     private static final String WEB_DB = "webDb";
     private static final String ANDROID_DATA_DIR = "/Android/data/";
     private static final String MAPCACHE_DIR = "mapcache";
@@ -67,18 +60,6 @@ public class EnvSys extends CordovaActivity
         if(successfulCopy) {
             unzip(targetTilesZip, mapcacheBaseDirectory);
         }
-        try{
-            File form = new File(Environment.getExternalStorageDirectory(), DEFAULT_FORM);
-            if(!form.exists()){
-                Log.v(TAG, "Default form doesn't exist");
-                this.copy(form);
-            } else {
-                Log.v(TAG, "Using " + DEFAULT_FORM);
-            }
-        }
-        catch (Exception e){
-            e.printStackTrace();
-        }
     }
 
     private File buildMapcacheBaseDirectory() {
@@ -93,16 +74,6 @@ public class EnvSys extends CordovaActivity
 
         }
         return fbaseDirectory;
-    }
-
-    // copy form from www root to ftopen assets
-    private void copy(File form) throws IOException{
-        InputStream in = this.getApplicationContext().getAssets().open(SOURCE_FORM);
-        OutputStream out = new FileOutputStream(form);
-        byte[] buf = new byte[1024];
-        int len; while ((len = in.read(buf)) > 0) out.write(buf, 0, len);
-        in.close(); out.close();
-        Log.v(TAG, SOURCE_FORM + " copied to " + DEFAULT_FORM);
     }
 
     /**
